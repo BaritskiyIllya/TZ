@@ -93,6 +93,8 @@
     <orderEntry type="library" scope="PROVIDED" name="rb-inotify (v0.10.1, rbenv: 2.6.3) [gem]" level="application" />
     <orderEntry type="library" scope="PROVIDED" name="responders (v3.1.1, rbenv: 2.6.3) [gem]" level="application" />
     <orderEntry type="library" scope="PROVIDED" name="ruby2_keywords (v0.0.5, rbenv: 2.6.3) [gem]" level="application" />
+    <orderEntry type="library" scope="PROVIDED" name="sassc (v2.4.0, rbenv: 2.6.3) [gem]" level="application" />
+    <orderEntry type="library" scope="PROVIDED" name="sassc-rails (v2.1.2, rbenv: 2.6.3) [gem]" level="application" />
     <orderEntry type="library" scope="PROVIDED" name="spring (v2.1.1, rbenv: 2.6.3) [gem]" level="application" />
     <orderEntry type="library" scope="PROVIDED" name="spring-watcher-listen (v2.0.1, rbenv: 2.6.3) [gem]" level="application" />
     <orderEntry type="library" scope="PROVIDED" name="sprockets (v4.2.1, rbenv: 2.6.3) [gem]" level="application" />
@@ -100,6 +102,7 @@
     <orderEntry type="library" scope="PROVIDED" name="sqlite3 (v1.6.9, rbenv: 2.6.3) [gem]" level="application" />
     <orderEntry type="library" scope="PROVIDED" name="thor (v1.3.0, rbenv: 2.6.3) [gem]" level="application" />
     <orderEntry type="library" scope="PROVIDED" name="thread_safe (v0.3.6, rbenv: 2.6.3) [gem]" level="application" />
+    <orderEntry type="library" scope="PROVIDED" name="tilt (v2.3.0, rbenv: 2.6.3) [gem]" level="application" />
     <orderEntry type="library" scope="PROVIDED" name="timeout (v0.4.1, rbenv: 2.6.3) [gem]" level="application" />
     <orderEntry type="library" scope="PROVIDED" name="tzinfo (v1.2.11, rbenv: 2.6.3) [gem]" level="application" />
     <orderEntry type="library" scope="PROVIDED" name="websocket-driver (v0.7.6, rbenv: 2.6.3) [gem]" level="application" />
@@ -120,15 +123,15 @@
         <option value="active_admin:resource" />
         <option value="active_admin:webpacker" />
         <option value="active_record:application_record" />
-        <option value="active_record:migration" />
-        <option value="active_record:model" />
         <option value="application_record" />
+        <option value="assets" />
         <option value="channel" />
         <option value="controller" />
         <option value="formtastic:form" />
         <option value="formtastic:input" />
         <option value="formtastic:install" />
         <option value="generator" />
+        <option value="helper" />
         <option value="inherited_resources_controller" />
         <option value="integration_test" />
         <option value="job" />
@@ -147,17 +150,9 @@
         <option value="system_test" />
         <option value="task" />
         <option value="test_unit:channel" />
-        <option value="test_unit:controller" />
         <option value="test_unit:generator" />
-        <option value="test_unit:helper" />
-        <option value="test_unit:integration" />
-        <option value="test_unit:job" />
         <option value="test_unit:mailbox" />
-        <option value="test_unit:mailer" />
-        <option value="test_unit:model" />
         <option value="test_unit:plugin" />
-        <option value="test_unit:scaffold" />
-        <option value="test_unit:system" />
       </list>
     </option>
     <option name="myGenerators">
@@ -169,15 +164,15 @@
         <option value="active_admin:resource" />
         <option value="active_admin:webpacker" />
         <option value="active_record:application_record" />
-        <option value="active_record:migration" />
-        <option value="active_record:model" />
         <option value="application_record" />
+        <option value="assets" />
         <option value="channel" />
         <option value="controller" />
         <option value="formtastic:form" />
         <option value="formtastic:input" />
         <option value="formtastic:install" />
         <option value="generator" />
+        <option value="helper" />
         <option value="inherited_resources_controller" />
         <option value="integration_test" />
         <option value="job" />
@@ -196,17 +191,9 @@
         <option value="system_test" />
         <option value="task" />
         <option value="test_unit:channel" />
-        <option value="test_unit:controller" />
         <option value="test_unit:generator" />
-        <option value="test_unit:helper" />
-        <option value="test_unit:integration" />
-        <option value="test_unit:job" />
         <option value="test_unit:mailbox" />
-        <option value="test_unit:mailer" />
-        <option value="test_unit:model" />
         <option value="test_unit:plugin" />
-        <option value="test_unit:scaffold" />
-        <option value="test_unit:system" />
       </list>
     </option>
   </component>
@@ -372,6 +359,21 @@
               </RakeTaskImpl>
             </subtasks>
           </RakeTaskImpl>
+          <RakeTaskImpl id="assets">
+            <subtasks>
+              <RakeTaskImpl description="Remove old compiled assets" fullCommand="assets:clean[keep]" id="clean[keep]" />
+              <RakeTaskImpl description="Remove compiled assets" fullCommand="assets:clobber" id="clobber" />
+              <RakeTaskImpl description="Load asset compile environment" fullCommand="assets:environment" id="environment" />
+              <RakeTaskImpl description="Compile all the assets named in config.assets.precompile" fullCommand="assets:precompile" id="precompile" />
+              <RakeTaskImpl description="" fullCommand="assets:clean" id="clean" />
+            </subtasks>
+          </RakeTaskImpl>
+          <RakeTaskImpl id="cache_digests">
+            <subtasks>
+              <RakeTaskImpl description="Lookup first-level dependencies for TEMPLATE (like messages/show or comments/_comment.html)" fullCommand="cache_digests:dependencies" id="dependencies" />
+              <RakeTaskImpl description="Lookup nested dependencies for TEMPLATE (like messages/show or comments/_comment.html)" fullCommand="cache_digests:nested_dependencies" id="nested_dependencies" />
+            </subtasks>
+          </RakeTaskImpl>
           <RakeTaskImpl id="db">
             <subtasks>
               <RakeTaskImpl description="Creates the database from DATABASE_URL or config/database.yml for the current RAILS_ENV (use db:create:all to create all databases in the config). Without RAILS_ENV or when RAILS_ENV is development, it defaults to creating the development and test databases" fullCommand="db:create" id="create" />
@@ -473,6 +475,26 @@
           <RakeTaskImpl description="Restart app by touching tmp/restart.txt" fullCommand="restart" id="restart" />
           <RakeTaskImpl description="Generate a cryptographically secure secret key (this is typically used to generate a secret for cookie sessions)" fullCommand="secret" id="secret" />
           <RakeTaskImpl description="Report code statistics (KLOCs, etc) from the application or engine" fullCommand="stats" id="stats" />
+          <RakeTaskImpl description="Runs all tests in test folder except system ones" fullCommand="test" id="test" />
+          <RakeTaskImpl id="test">
+            <subtasks>
+              <RakeTaskImpl description="Run tests quickly, but also reset db" fullCommand="test:db" id="db" />
+              <RakeTaskImpl description="Run system tests only" fullCommand="test:system" id="system" />
+              <RakeTaskImpl description="" fullCommand="test:channels" id="channels" />
+              <RakeTaskImpl description="" fullCommand="test:controllers" id="controllers" />
+              <RakeTaskImpl description="" fullCommand="test:functionals" id="functionals" />
+              <RakeTaskImpl description="" fullCommand="test:generators" id="generators" />
+              <RakeTaskImpl description="" fullCommand="test:helpers" id="helpers" />
+              <RakeTaskImpl description="" fullCommand="test:integration" id="integration" />
+              <RakeTaskImpl description="" fullCommand="test:jobs" id="jobs" />
+              <RakeTaskImpl description="" fullCommand="test:mailboxes" id="mailboxes" />
+              <RakeTaskImpl description="" fullCommand="test:mailers" id="mailers" />
+              <RakeTaskImpl description="" fullCommand="test:models" id="models" />
+              <RakeTaskImpl description="" fullCommand="test:prepare" id="prepare" />
+              <RakeTaskImpl description="" fullCommand="test:run" id="run" />
+              <RakeTaskImpl description="" fullCommand="test:units" id="units" />
+            </subtasks>
+          </RakeTaskImpl>
           <RakeTaskImpl id="time">
             <subtasks>
               <RakeTaskImpl description="List all time zones, list by two-letter country code (`rails time:zones[US]`), or list by UTC offset (`rails time:zones[-8]`)" fullCommand="time:zones[country_or_offset]" id="zones[country_or_offset]" />
@@ -522,6 +544,7 @@
               <RakeTaskImpl description="Checks project structure for Zeitwerk compatibility" fullCommand="zeitwerk:check" id="check" />
             </subtasks>
           </RakeTaskImpl>
+          <RakeTaskImpl description="" fullCommand="default" id="default" />
           <RakeTaskImpl id="dev">
             <subtasks>
               <RakeTaskImpl description="" fullCommand="dev:cache" id="cache" />
