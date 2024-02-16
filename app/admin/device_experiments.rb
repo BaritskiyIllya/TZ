@@ -15,8 +15,11 @@ ActiveAdmin.register DeviceExperiment do
   #   permitted
   # end
 
-  # filter :experiments_option, :as => :select, :collection => ExperimentsOption.all.map
-  # filter :experiments_option_id, as: :select, collection: -> { ExperimentsOption.pluck(:id, :options) }
-  filter :experiments_option_id, as: :select, collection: -> { ExperimentsOption.pluck(:options, :id).map { |options, id| ["ID:#{id} #{options} - #{DeviceExperiment.where(experiments_option_id: id).count}", id] } }
+
+  filter :experiments_option_id, as: :select, collection: -> { ExperimentsOption
+                                                                 .pluck(:options, :id)
+                                                                 .map { |options, id| ["ID:#{id} #{options} - #{DeviceExperiment.where(experiments_option_id: id).count}", id] } }
+  filter :created_at
+  filter :updated_at
 
 end
